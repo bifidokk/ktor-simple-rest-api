@@ -13,10 +13,14 @@ fun Application.configureRouting() {
         }
 
         post("/login"){
-            val userLogin = call.receive<UserLogin>()
-            call.respondText("Logged in")
+            val userLogin = call.receive<UserLoginRequest>()
+            call.respond(UserLoginResponse(userLogin.email))
         }
     }
 }
+
 @Serializable
-data class UserLogin(val email: String, val password: String)
+data class UserLoginRequest(val email: String, val password: String)
+
+@Serializable
+data class UserLoginResponse(val email: String)
