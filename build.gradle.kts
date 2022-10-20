@@ -3,6 +3,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val ktorm_version: String by project
 val postgres_version: String by project
+val koin_ktor: String by project
 
 plugins {
     application
@@ -35,6 +36,9 @@ dependencies {
 
     implementation("org.ktorm:ktorm-core:$ktorm_version")
     implementation("org.postgresql:postgresql:$postgres_version")
+
+    implementation("io.insert-koin:koin-ktor:$koin_ktor")
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
