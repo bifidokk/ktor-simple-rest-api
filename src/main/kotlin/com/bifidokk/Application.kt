@@ -1,6 +1,5 @@
 package com.bifidokk
 
-import com.bifidokk.database.DatabaseConnectionFactory
 import com.bifidokk.di.appModule
 import com.bifidokk.plugins.configureRouting
 import io.ktor.serialization.kotlinx.json.*
@@ -11,7 +10,6 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
-import org.koin.ktor.ext.inject
 import org.koin.logger.slf4jLogger
 import org.koin.ktor.plugin.Koin
 
@@ -31,7 +29,5 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
         })
     }
     configureRouting()
-    val databaseFactory by inject<DatabaseConnectionFactory>()
-    databaseFactory.init()
 }
 

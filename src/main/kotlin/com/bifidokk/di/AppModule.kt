@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<ApplicationConfig> { HoconApplicationConfig(ConfigFactory.load()) }
-    single { DatabaseConnectionFactory(get()) }
+    single { DatabaseConnectionFactory(get()).apply { init() }.database }
 }
