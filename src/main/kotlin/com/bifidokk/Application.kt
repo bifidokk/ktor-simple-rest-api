@@ -12,6 +12,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.logger.slf4jLogger
 import org.koin.ktor.plugin.Koin
+import org.koin.ktor.ext.get
 
 fun main(args: Array<String>): Unit =
     EngineMain.main(args)
@@ -28,6 +29,6 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
             isLenient = true
         })
     }
-    configureRouting()
+    configureRouting(get())
 }
 
