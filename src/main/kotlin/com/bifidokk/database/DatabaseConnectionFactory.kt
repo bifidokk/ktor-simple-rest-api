@@ -8,7 +8,10 @@ class DatabaseConnectionFactory(private val config: ApplicationConfig) {
 
     fun init() {
         database = Database.connect(
-            url = config.property("db.jdbc_db_url").getString()
+            url = config.property("db.jdbc_db_url").getString(),
+            driver = config.property("db.jdbc_db_driver").getString(),
+            user = config.property("db.jdbc_db_user").getString(),
+            password = config.property("db.jdbc_db_password").getString(),
         )
     }
 }

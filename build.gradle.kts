@@ -36,6 +36,7 @@ dependencies {
 
     implementation("org.ktorm:ktorm-core:$ktorm_version")
     implementation("org.postgresql:postgresql:$postgres_version")
+    implementation("org.ktorm:ktorm-support-postgresql:$ktorm_version")
 
     implementation("io.insert-koin:koin-ktor:$koin_ktor")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
