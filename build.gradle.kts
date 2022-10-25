@@ -4,12 +4,14 @@ val logback_version: String by project
 val ktorm_version: String by project
 val postgres_version: String by project
 val koin_ktor: String by project
+val flyway_version: String by project
 
 plugins {
     application
     kotlin("jvm") version "1.7.20"
     id("io.ktor.plugin") version "2.1.2"
     kotlin("plugin.serialization") version "1.7.20"
+    id("org.flywaydb.flyway") version "9.5.1"
 }
 
 group = "com.bifidokk"
@@ -41,6 +43,12 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:$koin_ktor")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
 
+    implementation("org.flywaydb:flyway-core:$flyway_version")
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+flyway {
+    driver = "org.postgresql.Driver"
 }
