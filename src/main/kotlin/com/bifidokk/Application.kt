@@ -1,9 +1,13 @@
 package com.bifidokk
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.*
 import com.bifidokk.di.appModule
 import com.bifidokk.plugins.configureRouting
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.config.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -29,6 +33,17 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
             isLenient = true
         })
     }
-    configureRouting(get())
+
+    val secret = environment.config.property("jwt.secret").getString()
+    install(Authentication) {
+        jwt("auth-jwt") {
+            verifier(
+                JWT
+                .require(Algorithm.HMAC256(secret))
+                .build()
+            )
+        }
+    }
+    configureRouting(get(), get())
 }
 
