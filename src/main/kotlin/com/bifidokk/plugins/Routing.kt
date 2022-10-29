@@ -3,6 +3,7 @@ package com.bifidokk.plugins
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.bifidokk.repository.NoteRepository
+import com.bifidokk.repository.UserRepository
 import com.bifidokk.service.CommonResponse
 import com.bifidokk.service.auth.AuthTokenResponse
 import com.bifidokk.service.auth.UserCredentialsRequest
@@ -16,7 +17,8 @@ import java.util.*
 
 fun Application.configureRouting(
     noteRepository: NoteRepository,
-    config: ApplicationConfig
+    config: ApplicationConfig,
+    userRepository: UserRepository
 ) {
     routing {
         get("/") {
@@ -30,10 +32,19 @@ fun Application.configureRouting(
 
         post("/auth") {
             val userCredentials = call.receive<UserCredentialsRequest>()
+            val user = userRepository.getUserByEmail(userCredentials.email)
 
+            if (user == null) {
+                call.respond(
+                    HttpStatusCode.BadRequest,
+                    CommonResponse(data = "null", message = "Invalid username/password")
+                )
+
+                return@post
+            }
 
             val token = JWT.create()
-                .withClaim("email", userCredentials.email)
+                .withClaim("email", user.email)
                 .withExpiresAt(Date(System.currentTimeMillis() + 600))
                 .sign(Algorithm.HMAC256(config.property("jwt.secret").getString()))
 

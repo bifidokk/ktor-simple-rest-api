@@ -44,6 +44,6 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
             )
         }
     }
-    configureRouting(get(), get())
+    configureRouting(get(), get(), get())
 }
 

@@ -7,6 +7,6 @@ import org.ktorm.schema.varchar
 
 object UserEntity: Table<Nothing>("user") {
     val id = int("id").primaryKey()
-    val email = varchar("note")
+    val email = varchar("email")
     val createdAt = datetime("created_at")
 }
