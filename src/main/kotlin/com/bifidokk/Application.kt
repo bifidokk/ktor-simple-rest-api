@@ -3,7 +3,7 @@ package com.bifidokk
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.*
 import com.bifidokk.di.appModule
-import com.bifidokk.plugins.configureRouting
+import com.bifidokk.route.configureRouting
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -44,6 +44,6 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
             )
         }
     }
-    configureRouting(get(), get(), get())
+    configureRouting()
 }
 
