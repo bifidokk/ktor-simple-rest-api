@@ -1,9 +1,9 @@
 package com.bifidokk
 
-import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.*
 import com.bifidokk.di.appModule
 import com.bifidokk.route.configureRouting
+import com.bifidokk.service.auth.AuthTokenService
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -13,6 +13,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.json.Json
+import org.koin.ktor.ext.inject
 import org.koin.logger.slf4jLogger
 import org.koin.ktor.plugin.Koin
 
@@ -32,13 +33,11 @@ fun Application.module() {
         })
     }
 
-    val secret = environment.config.property("jwt.secret").getString()
+    val authTokenService by inject<AuthTokenService>()
     install(Authentication) {
         jwt("auth-jwt") {
             verifier(
-                JWT
-                .require(Algorithm.HMAC256(secret))
-                .build()
+                authTokenService.verifyJwtToken()
             )
         }
     }
