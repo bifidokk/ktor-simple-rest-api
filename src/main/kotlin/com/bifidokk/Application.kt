@@ -39,6 +39,9 @@ fun Application.module() {
             verifier(
                 authTokenService.verifyJwtToken()
             )
+            validate { jwtCredential ->
+                authTokenService.getJwtPrincipal(jwtCredential)
+            }
         }
     }
     configureRouting()

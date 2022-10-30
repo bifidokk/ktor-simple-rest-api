@@ -17,7 +17,7 @@ fun Route.authRouter(
 ) {
     post("/auth") {
         val userCredentials = call.receive<UserCredentialsRequest>()
-        val user = userRepository.getUserByEmail(userCredentials.email)
+        val user = userRepository.findUserByEmail(userCredentials.email)
 
         if (user == null) {
             call.respond(

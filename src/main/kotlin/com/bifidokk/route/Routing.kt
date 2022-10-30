@@ -8,5 +8,6 @@ fun Application.configureRouting() {
     routing {
         noteRouter(get())
         authRouter(get(), get())
+        userRouter(get())
     }
 }

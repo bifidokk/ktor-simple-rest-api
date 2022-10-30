@@ -13,5 +13,5 @@ val appModule = module {
     single { DatabaseConnectionFactory(get()).apply { init() }.database }
     single { NoteRepository(get()) }
     single { UserRepository(get()) }
-    single { AuthTokenService(get()) }
+    single { AuthTokenService(get(), get()) }
 }
