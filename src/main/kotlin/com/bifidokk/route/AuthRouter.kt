@@ -1,22 +1,19 @@
 package com.bifidokk.route
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
 import com.bifidokk.repository.UserRepository
 import com.bifidokk.service.CommonResponse
 import com.bifidokk.service.auth.AuthTokenResponse
+import com.bifidokk.service.auth.AuthTokenService
 import com.bifidokk.service.auth.UserCredentialsRequest
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.config.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.util.*
 
 fun Route.authRouter(
     userRepository: UserRepository,
-    config: ApplicationConfig,
+    authTokenService: AuthTokenService
 ) {
     post("/auth") {
         val userCredentials = call.receive<UserCredentialsRequest>()
@@ -31,10 +28,7 @@ fun Route.authRouter(
             return@post
         }
 
-        val token = JWT.create()
-            .withClaim("email", user.email)
-            .withExpiresAt(Date(System.currentTimeMillis() + 600))
-            .sign(Algorithm.HMAC256(config.property("jwt.secret").getString()))
+        val token = authTokenService.generateJwtToken(user)
 
         call.respond(
             HttpStatusCode.OK, CommonResponse(
