@@ -3,7 +3,9 @@ package com.bifidokk
 import com.auth0.jwt.algorithms.*
 import com.bifidokk.di.appModule
 import com.bifidokk.route.configureRouting
+import com.bifidokk.route.response.ErrorResponse
 import com.bifidokk.service.auth.AuthTokenService
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -12,6 +14,7 @@ import io.ktor.server.config.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.response.*
 import kotlinx.serialization.json.Json
 import org.koin.ktor.ext.inject
 import org.koin.logger.slf4jLogger
@@ -41,6 +44,14 @@ fun Application.module() {
             )
             validate { jwtCredential ->
                 authTokenService.getJwtPrincipal(jwtCredential)
+            }
+            challenge { defaultScheme, realm ->
+                call.respond(
+                    HttpStatusCode.Unauthorized,
+                    ErrorResponse(
+                        error = "Token is not valid or has expired"
+                    )
+                )
             }
         }
     }

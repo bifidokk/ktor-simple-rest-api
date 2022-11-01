@@ -1,6 +1,6 @@
 package com.bifidokk.route
 
-import com.bifidokk.service.CommonResponse
+import com.bifidokk.route.response.CommonResponse
 import com.bifidokk.service.auth.AuthTokenService
 import io.ktor.http.*
 import io.ktor.server.application.*

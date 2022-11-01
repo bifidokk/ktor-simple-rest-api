@@ -1,4 +1,4 @@
-package com.bifidokk.service
+package com.bifidokk.route.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

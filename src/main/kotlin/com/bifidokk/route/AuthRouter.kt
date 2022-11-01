@@ -1,7 +1,7 @@
 package com.bifidokk.route
 
 import com.bifidokk.repository.UserRepository
-import com.bifidokk.service.CommonResponse
+import com.bifidokk.route.response.CommonResponse
 import com.bifidokk.service.auth.AuthTokenResponse
 import com.bifidokk.service.auth.AuthTokenService
 import com.bifidokk.service.auth.UserCredentialsRequest

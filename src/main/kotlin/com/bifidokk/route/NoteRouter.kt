@@ -1,7 +1,7 @@
 package com.bifidokk.route
 
 import com.bifidokk.repository.NoteRepository
-import com.bifidokk.service.CommonResponse
+import com.bifidokk.route.response.CommonResponse
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
