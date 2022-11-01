@@ -1,10 +1,10 @@
-package com.bifidokk.service
+package com.bifidokk.service.note
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User (
+data class Note(
     @SerialName("id") val id: Int? = null,
-    @SerialName("email") val email: String
+    @SerialName("note") val note: String
 )

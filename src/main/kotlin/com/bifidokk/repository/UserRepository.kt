@@ -1,7 +1,7 @@
 package com.bifidokk.repository
 
 import com.bifidokk.entity.UserEntity
-import com.bifidokk.service.User
+import com.bifidokk.service.user.User
 import org.ktorm.database.Database
 import org.ktorm.dsl.*
 
