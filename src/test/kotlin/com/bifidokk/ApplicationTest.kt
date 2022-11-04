@@ -2,7 +2,6 @@ package com.bifidokk
 
 import io.ktor.http.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 
@@ -12,8 +11,7 @@ class ApplicationTest {
         application {
         }
         client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+            assertEquals(HttpStatusCode.Unauthorized, status)
         }
     }
 }

@@ -45,7 +45,7 @@ fun Application.module() {
             validate { jwtCredential ->
                 authTokenService.getJwtPrincipal(jwtCredential)
             }
-            challenge { defaultScheme, realm ->
+            challenge { _, _ ->
                 call.respond(
                     HttpStatusCode.Unauthorized,
                     ErrorResponse(
