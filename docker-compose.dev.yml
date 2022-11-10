@@ -2,6 +2,11 @@ services:
   web:
     build:
       dockerfile: ./Dockerfile.dev
+    environment:
+      JWT_SECRET: 'jwt-secret'
+      JDBC_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      JDBC_DATABASE_URL: jdbc:postgresql://db:5432/ktor_notes
+      JDBC_DATABASE_USER: ${POSTGRES_USER:-postgres}
     ports:
       - "81:8081"
     depends_on:
@@ -11,11 +16,15 @@ services:
     image: postgres
     volumes:
       - ./db:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_DB: ktor_notes
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
     ports:
-      - "54333:5432"
+      - "54322:5432"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 1s
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
