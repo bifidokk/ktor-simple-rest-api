@@ -36,7 +36,7 @@ jobs:
       - name: Migrations
         uses: joshuaavalon/flyway-action@v3.0.0
         with:
-          url: $JDBC_DATABASE_URL
+          url: jdbc:postgresql://postgres:5432/ktor
           user: $JDBC_DATABASE_USER
           password: $JDBC_DATABASE_PASSWORD
 
