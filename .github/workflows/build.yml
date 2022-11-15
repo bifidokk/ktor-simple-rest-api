@@ -39,7 +39,7 @@ jobs:
           url: jdbc:postgresql://postgres:5432/ktor
           user: ktor
           password: ktor
-          locations: filesystem:.src/main/resources/db/migration/
+          locations: filesystem:./src/main/resources/db/migration/
 
       - name: Set up Java
         uses: actions/setup-java@v2
