@@ -39,5 +39,12 @@ jobs:
           distribution: 'adopt'
           java-version: 11
 
+      - name: Migrations
+        uses: joshuaavalon/flyway-action@v3.0.0
+        with:
+          url: $JDBC_DATABASE_URL
+          user: $JDBC_DATABASE_USER
+          password: $JDBC_DATABASE_PASSWORD
+
       - name: Gradle compile and test
         run: ./gradlew clean test
