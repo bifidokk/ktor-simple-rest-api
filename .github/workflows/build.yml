@@ -37,8 +37,8 @@ jobs:
         uses: joshuaavalon/flyway-action@v3.0.0
         with:
           url: jdbc:postgresql://postgres:5432/ktor
-          user: $JDBC_DATABASE_USER
-          password: $JDBC_DATABASE_PASSWORD
+          user: ktor
+          password: ktor
 
       - name: Set up Java
         uses: actions/setup-java@v2
