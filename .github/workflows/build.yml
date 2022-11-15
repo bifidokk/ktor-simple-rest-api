@@ -33,18 +33,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 11
-
       - name: Migrations
         uses: joshuaavalon/flyway-action@v3.0.0
         with:
           url: $JDBC_DATABASE_URL
           user: $JDBC_DATABASE_USER
           password: $JDBC_DATABASE_PASSWORD
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 11
 
       - name: Gradle compile and test
         run: ./gradlew clean test
