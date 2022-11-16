@@ -43,10 +43,11 @@ jobs:
         env:
           JWT_SECRET: 'jwt-secret'
           JDBC_DATABASE_PASSWORD: ktor
-          JDBC_DATABASE_URL: jdbc:postgresql://127.0.0.1:5432/ktor
+          JDBC_DATABASE_URL: jdbc:postgresql://0.0.0.0:5432/ktor
           JDBC_DATABASE_USER: ktor
 
       - name: Archive test results report
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: tests-report
