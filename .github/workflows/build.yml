@@ -46,3 +46,9 @@ jobs:
           JDBC_DATABASE_URL: jdbc:postgresql://127.0.0.1:5432/ktor
           JDBC_DATABASE_USER: ktor
 
+      - name: Archive test results report
+          uses: actions/upload-artifact@v3
+          with:
+            name: tests-report
+            path: /home/runner/work/ktor-simple-rest-api/ktor-simple-rest-api/build/reports/tests
+
