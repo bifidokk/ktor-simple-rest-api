@@ -6,15 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  POSTGRES_PASSWORD: ktor
-  POSTGRES_DB: ktor
-  POSTGRES_USER: ktor
-  JWT_SECRET: 'jwt-secret'
-  JDBC_DATABASE_PASSWORD: ktor
-  JDBC_DATABASE_URL: jdbc:postgresql://0.0.0.0:5432/ktor
-  JDBC_DATABASE_USER: ktor
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,3 +40,9 @@ jobs:
 
       - name: Gradle compile and test
         run: ./gradlew clean test
+        env:
+          JWT_SECRET: 'jwt-secret'
+          JDBC_DATABASE_PASSWORD: ktor
+          JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/ktor
+          JDBC_DATABASE_USER: ktor
+
