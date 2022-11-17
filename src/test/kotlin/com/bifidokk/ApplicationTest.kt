@@ -10,8 +10,6 @@ import org.koin.core.context.stopKoin
 class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
-        application {
-        }
         client.get("/").apply {
             assertEquals(HttpStatusCode.Unauthorized, status)
         }
