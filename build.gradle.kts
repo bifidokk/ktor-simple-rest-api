@@ -5,6 +5,7 @@ val ktorm_version: String by project
 val postgres_version: String by project
 val koin_ktor: String by project
 val flyway_version: String by project
+val mockk_version: String by project
 
 plugins {
     application
@@ -52,6 +53,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation ("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation ("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 
 flyway {
