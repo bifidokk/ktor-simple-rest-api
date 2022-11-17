@@ -8,6 +8,8 @@ import io.ktor.client.plugins.contentnegotiation.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
+import org.junit.After
+import org.koin.core.context.stopKoin
 
 class ApplicationTest {
     @Test
@@ -21,6 +23,7 @@ class ApplicationTest {
 
     @Test
     fun `when log in user, we return response token body`() = testApplication {
+
         val client = createClient {
             install(ContentNegotiation) {
                 json(Json {
@@ -36,5 +39,10 @@ class ApplicationTest {
         }
 
         assertEquals(HttpStatusCode.OK, response.status)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 }
