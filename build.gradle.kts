@@ -28,6 +28,10 @@ repositories {
     mavenCentral()
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
@@ -50,9 +54,9 @@ dependencies {
     implementation ("io.ktor:ktor-server-auth-jwt:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation ("io.ktor:ktor-server-test-host:$ktor_version")
-    testImplementation ("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.4.2")
+    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 
     testImplementation("io.mockk:mockk:$mockk_version")
 }
