@@ -2,18 +2,21 @@ package com.bifidokk.route
 
 import com.bifidokk.repository.UserRepository
 import com.bifidokk.service.auth.AuthTokenService
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.routing.*
-import io.ktor.server.testing.handleRequest
-import io.ktor.server.testing.setBody
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.routing.Routing
+import io.ktor.server.testing.ApplicationTestBuilder
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,16 +25,14 @@ class AuthRouteTest: BaseRoutingTest() {
     private val userRepository: UserRepository = mockk()
     private val authTokenService: AuthTokenService = mockk()
 
-    @BeforeAll
-    fun setup() {
-        koinModules = module {
-            single { userRepository }
-        }
+    override val koinModules: Module = module {
+        single { userRepository }
+        single { authTokenService }
+    }
 
-        moduleList = {
-            install(Routing) {
-                authRouter(userRepository, authTokenService)
-            }
+    override val moduleList: ApplicationTestBuilder.() -> Unit = {
+        install(Routing) {
+            authRouter(userRepository, authTokenService)
         }
     }
 
@@ -44,10 +45,11 @@ class AuthRouteTest: BaseRoutingTest() {
     fun `it returns 400 error if a user does not exist`() = withBaseTestApplication {
         coEvery { userRepository.findUserByEmail(any()) } returns null
 
-        val call = handleRequest(HttpMethod.Post, "/auth") {
-            addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+        val response = customClient.post("/auth") {
+            header(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             setBody("{\"email\": \"user@user.com\"}")
         }
-        assertEquals(HttpStatusCode.BadRequest, call.response.status())
+
+        assertEquals(HttpStatusCode.BadRequest, response.status)
     }
 }
