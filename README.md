@@ -1,1 +1,1 @@
-# Simple REST API implementation usin Ktor
+# Simple REST API implementation using Ktor
